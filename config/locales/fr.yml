@@ -2,8 +2,6 @@ fr:
   activerecord:
     models:
       task: tâche
-      content: contenu
-      created_at: date et heure de création
     attributes:
       task:
         title: titre
