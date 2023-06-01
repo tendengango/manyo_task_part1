@@ -9,6 +9,8 @@
     Task.find_or_create_by(
         titre: "task#{i+1}",
         content: "content#{i*10}",
+        priority: 
+        status:
     )
 end
 
