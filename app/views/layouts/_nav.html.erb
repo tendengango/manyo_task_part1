@@ -1,11 +1,23 @@
 <nav class="navbar bg-light">
   <ul class="navbar-nav">
-        <li class="nav-item">
+        <% flash.each do |key, value| %>
+      <%= content_tag(:div, value, class: "#{key}") %>
+    <% end %>
+    <% if logged_in? %>
+    <li class="nav-item">
+      <%= link_to t('nav.tasks_index'), tasks_path, id:"tasks-index"%>
+    </li>
+    <li class="nav-item">
+      <%= link_to t('nav.new_task'), new_task_path, id: "new-task" %>
+    </li>
+    <li class="nav-item"><%= link_to "Account Settings", user_path(current_user.id), id: "account-setting" %></li>
+    <li class="nav-item"><%= link_to "Log out", session_path(current_user.id), method: :delete, id:"sign-out" %></li>
+       
+    <% else %>
+       <li class="nav-item"><%= link_to "Register for an account", new_user_path, id: "sign-up" %></li>
+       <li class="nav-item"><%= link_to "Login", new_session_path, id: "sign-in" %></li>
+    <% end %>
+    
         
-         <%= link_to t('nav.tasks_index'), tasks_path , id:"tasks-index"%>
-        </li>
-        <li class="nav-item">
-        <%= link_to t('nav.new_task'), new_task_path, id: "new-task" %>
-        </li>
     </ul > 
 </nav>

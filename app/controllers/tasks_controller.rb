@@ -3,6 +3,7 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
+    @tasks = current_user.tasks
     if(params[:sort_deadline_on])
       tasks = Task.sort_deadline_on.sort_created_at
     elsif(params[:sort_priority])
@@ -39,17 +40,27 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
-
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task, notice: t('.created') }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    @task.user = current_user
+    if @task.save
+      redirect_to tasks_path, notice: t('.created')
+    else
+      render :new
     end
   end
+
+  #def create
+  
+ # @task = Task.new(task_params)
+    #if @task.save
+      #respond_to do |format|
+       # format.html { redirect_to @task, notice: t('.created') }
+       # format.json { render :show, status: :created, location: @task }
+      #else
+        #format.html { render :new, status: :unprocessable_entity }
+        #format.json { render json: @task.errors, status: :unprocessable_entity }
+     # end
+   # end
+ # end
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
@@ -81,6 +92,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:titre, :content, :deadline_on, :priority, :status)
+      params.require(:task).permit(:titre, :content, :user_id, :deadline_on, :priority, :status)
     end
 end
