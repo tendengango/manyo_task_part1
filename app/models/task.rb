@@ -1,9 +1,9 @@
 class Task < ApplicationRecord
-  validates :titre, :content, presence: true
+  validates :title, :content, presence: true
   validates :deadline_on, presence: true
   validates :priority, presence: true
   validates :status, presence: true
-  belongs_to :user, dependent: :destroy
+  belongs_to :user
   enum priority: {low: 0, medium: 1, high: 2}
   enum status: {todo: 0, doing: 1, done: 2}
 
@@ -12,7 +12,7 @@ class Task < ApplicationRecord
   scope :sort_priority, -> { order(priority: :desc) }
 
   scope :search_status, -> (status){ where(status: status) }
-  scope :search_title, -> (titre){ where("titre LIKE ?","%#{titre}%") }
+  scope :search_title, -> (title){ where("title LIKE ?", "%#{title}%") }
 
 
 end

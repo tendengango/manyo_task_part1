@@ -1,4 +1,5 @@
-<% if @user.errors.any? %>
+<%= form_with(model: user, local: true) do |form| %>
+  <% if @user.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.name %> from being saved:</h2>
     <ul>
@@ -8,22 +9,29 @@
     </ul>
   </div>
 <% end %>
-<%= form_with(model: @user, local: true) do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-  <br>
-  <br>
-  <%= f.label :email %>
-  <%= f.email_field :email %>
-  <br>
-  <br>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-  <br>
-  <br>
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %>
-  <br>
-  <br>
-  <%= f.submit %>
+   <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+  
+    <div class="field">
+      <%= form.label :email %>
+      <%= form.text_field :email %>
+    </div>
+  
+    <div class="field">
+      <%= form.label :password %>
+      <%= form.password_field :password %>
+    </div>
+  
+    <div class="field">
+    
+      <%= form.label :password_confirmation %>
+      <%= form.password_field :password_confirmation %>
+    </div>
+  
+    <div class="actions">
+      <% user_button_id = controller.action_name == "new" ? "create-user" : "update-user" %>
+      <%= form.submit id: user_button_id %>
+    </div>
 <% end %>

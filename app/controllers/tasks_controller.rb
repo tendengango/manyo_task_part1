@@ -13,12 +13,12 @@ class TasksController < ApplicationController
       tasks = Task.sort_created_at
     end 
     if(params[:search]).present?
-      if params[:search][:status].present? && params[:search][:titre].present?
-        tasks = tasks.search_status(params[:search][:status]).search_title(params[:search][:titre])
+      if params[:search][:status].present? && params[:search][:title].present?
+        tasks = tasks.search_status(params[:search][:status]).search_title(params[:search][:title])
       elsif params[:search][:status].present?
         tasks = tasks.search_status(params[:search][:status]) 
-      elsif params[:search][:titre].present?
-        tasks = tasks.search_title(params[:search][:titre]) 
+      elsif params[:search][:title].present?
+        tasks = tasks.search_title(params[:search][:title]) 
       end
     end
     @tasks = tasks.page(params[:page]).per(10)
@@ -26,6 +26,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1 or /tasks/1.json
   def show
+     current_user_required(@task.user)
   end
 
   # GET /tasks/new
@@ -35,34 +36,49 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    current_user_required(@task.user)
   end
 
-  # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
     @task.user = current_user
-    if @task.save
-      redirect_to tasks_path, notice: t('.created')
-    else
-      render :new
+
+    respond_to do |format|
+      if @task.save
+        format.html { redirect_to @task, notice: t('.created') }
+        format.json { render :show, status: :created, location: @task }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   #def create
-  
- # @task = Task.new(task_params)
-    #if @task.save
-      #respond_to do |format|
-       # format.html { redirect_to @task, notice: t('.created') }
-       # format.json { render :show, status: :created, location: @task }
-      #else
-        #format.html { render :new, status: :unprocessable_entity }
-        #format.json { render json: @task.errors, status: :unprocessable_entity }
-     # end
-   # end
- # end
+    #@task = current_user.tasks.build(task_params)
+    #if params[:back]
+    #  render :new
+    #else
+    #  if @task.save
+    #    redirect_to task_path(@task.id), notice: "Task created!"
+    #  else
+    #    render :new
+    #  end
+    #end
+  #end
 
-  # PATCH/PUT /tasks/1 or /tasks/1.json
+  # POST /tasks or /tasks.json
+  #def create
+   # @task = Task.new(task_params)
+    #@task.user = current_user
+    #if @task.save
+      #redirect_to tasks_path, notice: t('.created')
+    #else
+      #render :new
+    #end
+  #end
+
+   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     respond_to do |format|
       if @task.update(task_params)
@@ -92,6 +108,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:titre, :content, :user_id, :deadline_on, :priority, :status)
+      params.require(:task).permit(:title, :content, :user_id, :deadline_on, :priority, :status)
     end
 end

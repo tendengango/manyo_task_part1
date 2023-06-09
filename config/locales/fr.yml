@@ -2,43 +2,50 @@ fr:
   activerecord:
     models:
       task: tâche
+      content: contenu
+      created_at: date et heure de création
     attributes:
       task:
         title: titre
         content: contenu
         created_at: date et heure de création
-        deadline_on: date de fin
-        priority: priorité
+        deadline_on: Date limite
+        priority:  priorité
         status: statut
-  enum:
-    task:
-      priority:
-      low: basse
-      medium: moyenne
-      high: haute
-    status:
-      todo: A faire
-      doing: En cours
-      done: Terminé
-    user:
-      name: nom
-      email: adresse électronique
-      password: mot de passe
-      password_confirmation: Mot de passe (confirmation)
-      admin: administrateur
-      tasks_count: Nombre de tâches
-    session:
-      email: adresse électronique
-      password: mot de passe
 
+      user:
+        title: Détails du compte
+        name: Nom
+        email: Adresse email
+        password: Mot de passe
+        password_confirmation: Mot de passe (confirmation)
+        admin: Droits d'administrateur
+
+        enum:
+          task:
+            priority:
+              low: faible
+              middle: moyen
+              high: haut
+            status:
+              todo: Pas commencé
+              doing: en cours
+              done: complétée 
     
+
+      #user:
+        #name: nom
+       # email: email
+        #password: mot de passe
+       # password_confirmation: confirmation du mot de passe
   errors:
-    format: "%{message}%{attribute}" 
+    format: "%{message}%{attribute}"
     messages:
       blank: Veuillez entrer-
+      
       taken: déjà utilisé
       too_short: Veuillez saisir au moins 6 caractères
-      confirmation: les mots de passe de correspondent pas
+      confirmation: et le mot de passe ne correspondent pas
   helpers:
     submit:
       create: Creer
@@ -46,6 +53,10 @@ fr:
   nav:
     tasks_index: Liste des tâches
     new_task: Enregistrer une tâche
+    account_details: Détails du compte
+    account_registration: Enregistrement de compte
+
+
     
   common:
     new: Nouvel tâche
@@ -71,38 +82,3 @@ fr:
       updated: Tâche mise à jour
     destroy:
       destroyed: Tâche supprimée
-  users:
-    index:
-      title: Page de la liste des utilisateurs
-    new:
-      title: Page d'enregistrement du compte
-      register: Enregistrement des utilisateurs
-      create-user: S'inscrire
-    edit:
-      title: Page de modification du compte
-      back: retour
-      edit: édition
-      update: Mise à jour
-    show:
-      title: Page des détails du compte
-    create:
-      created: "Compte enregistré"
-    update:
-      updated: Compte mis à jour
-    destroy:
-      destroyed: Compte supprimé
-    
-  sessions:
-    new:
-        title: Page de connexion
-    create:
-      invalid_combination: "Adresse électronique ou mot de passe invalide"
-  layouts:
-    application:
-      users_index: "Liste des utilisateurs"
-      tasks_index: "Liste des tâches"
-      sign_up: "Enregistrement du compte"
-      sign_in: "connexion"
-      account_settings: "Paramètres du compte"
-      sign_out: "déconnexion"
-      sign_up: "Enregistrement du compte"

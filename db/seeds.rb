@@ -7,10 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 50.times do |i| 
     Task.find_or_create_by(
-        titre: "task#{i+1}",
+        title: "task#{i+1}",
         content: "content#{i*10}",
-        priority: 
-        status:
+        deadline_on: Date.today.since(30),
+        priority: [0, 1, 2].sample,
+        status: [0, 1, 2].sample
     )
 end
 

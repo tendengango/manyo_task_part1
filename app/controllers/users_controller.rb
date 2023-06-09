@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :already_logged_in, only: [:new, :create]
   before_action :correct_user, only: [:show, :update, :edite, :destroy]
   skip_before_action :login_required, only: [:new, :create]
 
@@ -11,7 +12,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in(@user)
-      redirect_to user_path(@user.id)
+      redirect_to tasks_path, notice: 'Account registered.'
+      #redirect_to user_path(@user.id)
     else
       render :new
     end
