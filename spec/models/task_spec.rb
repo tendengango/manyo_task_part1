@@ -1,33 +1,41 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
+  let (:user){FactoryBot.create(:user) }
   describe 'Validation test' do
     context 'If the task Title is an empty string' do
       it 'Validation fails' do
-        task = Task.create(titre: '', content: 'Create a proposal.', deadline_on: '2023/5/25', priority: 'low', status: 'done')
+        task = Task.create(
+          titre: '', 
+          content: 'Create a proposal.', 
+          deadline_on: '2023/5/25', 
+          priority: 'low', 
+          status: 'done', 
+          user_id: user.id)
         expect(task).not_to be_valid
       end
     end
 
     context 'If the task description is empty' do
       it 'Validation fails' do
-        task = Task.create(titre: 'Test1', content: '', deadline_on: '2023/5/25', priority: 'low', status: 'done')
+        task = Task.create(titre: 'Test1', content: '', deadline_on: '2023/5/25', priority: 'low', status: 'done', user_id: user.id)
         expect(task).not_to be_valid
+        
       end
     end
 
     context 'If the task Title and description have values' do
       it 'You can register a task' do
-        task = Task.create(titre: 'Titre2', content: 'Create a proposal.', deadline_on: '2023/5/25', priority: 'low', status: 'done')
+        task = Task.create(titre: 'Titre2', content: 'Create a proposal.', deadline_on: '2023/5/25', priority: 'low', status: 'done', user_id: user.id)
         expect(task).to be_valid
       end
     end
   end
   describe 'Fonction de recherche' do
     # Créez des données de test multiples.
-    let!(:first_task) { FactoryBot.create(:task, titre: 'first_task_title', deadline_on: '2025/02/18', priority: 'medium', status: 'todo') }
-    let!(:second_task) { FactoryBot.create(:second_task, titre: "second_task_title", deadline_on: '2025/02/17', priority: 'high', status: 'doing') }
-    let!(:third_task) { FactoryBot.create(:third_task, titre: "third_task_title", deadline_on: '2025/02/16', priority: 'low', status: 'done') }
+    let!(:first_task) { FactoryBot.create(:task, titre: 'first_task_title', deadline_on: '2025/02/18', priority: 'middle', status: 'todo', user: user) }
+    let!(:second_task) { FactoryBot.create(:second_task, titre: "second_task_title", deadline_on: '2025/02/17', priority: 'high', status: 'doing', user: user) }
+    let!(:third_task) { FactoryBot.create(:third_task, titre: "third_task_title", deadline_on: '2025/02/16', priority: 'low', status: 'done', user: user) }
     context 'Lorsqu\'une recherche ambiguë d\'un Title la méthode scope' do
       it "Les tâches contenant des termes de recherche sont réduites." do
         # Title Exemple de code pour une méthode de recherche définie dans la portée comme search_title dans
