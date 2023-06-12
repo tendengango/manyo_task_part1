@@ -13,7 +13,8 @@ class SessionsController < ApplicationController
       redirect_to tasks_path
       #redirect_to user_path(user.id)
     else
-      flash.now[:danger] = 'I failed to login'
+      flash.now[:alert] = 'Incorrect email address or password.'
+      #flash.now[:danger] = 'I failed to login'
       render :new
     end
   end

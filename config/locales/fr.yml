@@ -14,7 +14,6 @@ fr:
         status: statut
 
       user:
-        title: Détails du compte
         name: Nom
         email: Adresse email
         password: Mot de passe
@@ -53,10 +52,6 @@ fr:
   nav:
     tasks_index: Liste des tâches
     new_task: Enregistrer une tâche
-    account_details: Détails du compte
-    account_registration: Enregistrement de compte
-
-
     
   common:
     new: Nouvel tâche

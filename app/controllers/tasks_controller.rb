@@ -3,30 +3,30 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = current_user.tasks
-    if(params[:sort_deadline_on])
-      tasks = Task.sort_deadline_on.sort_created_at
-    elsif(params[:sort_priority])
-      tasks = Task.sort_priority.sort_created_at
-     else
-    #ajout de la pagination .page(params[:page]).per(10)
-      tasks = Task.sort_created_at
-    end 
-    if(params[:search]).present?
+    if params[:sort_deadline_on]
+      tasks = current_user.tasks.sort_deadline_on.sort_created_at
+    elsif params[:sort_priority]
+      tasks = current_user.tasks.sort_priority.sort_created_at
+    else
+      tasks = current_user.tasks.sort_created_at
+    end
+    
+    if params[:search].present?
       if params[:search][:status].present? && params[:search][:title].present?
         tasks = tasks.search_status(params[:search][:status]).search_title(params[:search][:title])
       elsif params[:search][:status].present?
-        tasks = tasks.search_status(params[:search][:status]) 
+        tasks = tasks.search_status(params[:search][:status])
       elsif params[:search][:title].present?
-        tasks = tasks.search_title(params[:search][:title]) 
+        tasks = tasks.search_title(params[:search][:title])
       end
     end
+
     @tasks = tasks.page(params[:page]).per(10)
   end
 
   # GET /tasks/1 or /tasks/1.json
   def show
-     current_user_required(@task.user)
+    current_user_required(@task.user)
   end
 
   # GET /tasks/new
@@ -39,6 +39,7 @@ class TasksController < ApplicationController
     current_user_required(@task.user)
   end
 
+  # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
     @task.user = current_user
@@ -54,31 +55,7 @@ class TasksController < ApplicationController
     end
   end
 
-  #def create
-    #@task = current_user.tasks.build(task_params)
-    #if params[:back]
-    #  render :new
-    #else
-    #  if @task.save
-    #    redirect_to task_path(@task.id), notice: "Task created!"
-    #  else
-    #    render :new
-    #  end
-    #end
-  #end
-
-  # POST /tasks or /tasks.json
-  #def create
-   # @task = Task.new(task_params)
-    #@task.user = current_user
-    #if @task.save
-      #redirect_to tasks_path, notice: t('.created')
-    #else
-      #render :new
-    #end
-  #end
-
-   # PATCH/PUT /tasks/1 or /tasks/1.json
+  # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     respond_to do |format|
       if @task.update(task_params)
@@ -108,6 +85,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :content, :user_id, :deadline_on, :priority, :status)
+      params.require(:task).permit(:titre, :content, :deadline_on, :priority, :status)
     end
 end

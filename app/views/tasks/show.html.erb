@@ -1,9 +1,8 @@
 <h1><%= t('.title') %></h1>
-<p id="notice"><%= notice %></p>
 
 <p>
   <strong><%= Task.human_attribute_name(:title) %>:</strong>
-  <%= @task.title %>
+  <%= @task.titre %>
 </p>
 
 <p>
@@ -18,7 +17,7 @@
 
 <p>
   <strong><%= Task.human_attribute_name(:deadline_on) %>:</strong>
-  <%= @task.deadline_on.strftime("%Y/%m/%d") %> 
+  <%= @task.deadline_on.strftime("%Y/%m/%d") %>    
 </p>
 
 <p>

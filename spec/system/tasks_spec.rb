@@ -12,11 +12,11 @@ RSpec.describe 'Task management function', type: :system do
     context 'When registering a task' do
       it 'The registered task is displayed' do
         visit new_task_path
-        fill_in "titre", with: "title"
+        fill_in "Titre", with: "title"
         fill_in "contenu", with: "content"
         fill_in "Date limite", with: Date.today
         
-        find("#task_priority").find("option[value='mediu,']").select_option
+        find("#task_priority").find("option[value='middle']").select_option
         find("#task_status").find("option[value='done']").select_option
         # select "faible", from: "task[priority]"
         # select "未着手", from: "task[status]"
@@ -27,9 +27,9 @@ RSpec.describe 'Task management function', type: :system do
   end
 
   describe 'List display function' do
-    let!(:first_task) { FactoryBot.create(:task, title: "first_task", created_at: Time.zone.now.ago(3.days),priority: :low, status: :todo, user: user) }
-    let!(:second_task) { FactoryBot.create(:task, title: "second_task", created_at: Time.zone.now.ago(2.days),priority: :medium, status: :doing, user: user) }
-    let!(:third_task) { FactoryBot.create(:task, title: "third_task", created_at: Time.zone.now.ago(1.days),priority: :high, status: :done, user: user) }
+    let!(:first_task) { FactoryBot.create(:task, titre: "first_task", created_at: Time.zone.now.ago(3.days),priority: :low, status: :todo, user: user) }
+    let!(:second_task) { FactoryBot.create(:task, titre: "second_task", created_at: Time.zone.now.ago(2.days),priority: :middle, status: :doing, user: user) }
+    let!(:third_task) { FactoryBot.create(:task, titre: "third_task", created_at: Time.zone.now.ago(1.days),priority: :high, status: :done, user: user) }
       before do
         visit new_session_path
         fill_in "email address", with: user.email
@@ -49,7 +49,7 @@ RSpec.describe 'Task management function', type: :system do
       context 'When creating a new task' do
         it 'New task is displayed at the top' do
           visit new_task_path
-          fill_in "title", with: "title1"
+          fill_in "Titre", with: "title1"
           fill_in "contenu", with: "content"
           fill_in "Date limite", with: Date.today
           find("#task_priority").find("option[value='middle']").select_option
@@ -64,7 +64,7 @@ RSpec.describe 'Task management function', type: :system do
 
       describe 'Detailed display function' do
         context 'When transitioned to any task details screen' do
-          let (:task) {FactoryBot.create(:task, title: 'Test', content: 'Je suis un contenu', user: user)}
+          let (:task) {FactoryBot.create(:task, titre: 'Test', content: 'Je suis un contenu', user: user)}
           it 'The content of the task is displayed' do
             visit task_path(task)
             expect(page).to have_content 'Je suis un contenu'
