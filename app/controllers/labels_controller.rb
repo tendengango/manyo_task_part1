@@ -2,11 +2,12 @@ class LabelsController < ApplicationController
     before_action :set_label, only: %i(edit update destroy)
 
     def index
-        @labels = current_user.labels
+        @labels = current_user.labels.all
     end
 
     def new
-        @label = Label.new
+        @label = current_user.labels.new
+        
     end
 
     def edit
@@ -18,7 +19,7 @@ class LabelsController < ApplicationController
         @label.user = current_user
 
         if @label.save
-            redirect_to labels_paths, notice: 'Etiquette enregistrée'
+            redirect_to labels_path, notice: 'Etiquette enregistrée'
         else
             render :new
         end
