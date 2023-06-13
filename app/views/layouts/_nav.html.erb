@@ -10,6 +10,8 @@
         <% end %>  
           <li><%= link_to t('nav.tasks_index'), tasks_path, id: "tasks-index" %></li>
           <li><%= link_to t('nav.new_task'), new_task_path, id: "new-task" %></li>
+          <li><%= link_to t('nav.labels_index'), labels_path, id: "labels-index" %></li>
+          <li><%= link_to t('nav.new_label'), new_label_path, id: "new-label" %></li>
           <li><%= link_to t('nav.account_details'), user_path(current_user.id), id: "my-account" %></li>
           <li><%= link_to "logout", session_path(current_user.id), method: :delete, id: "sign-out" %></li>
        

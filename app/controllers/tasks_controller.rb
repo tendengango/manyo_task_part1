@@ -22,6 +22,7 @@ class TasksController < ApplicationController
     end
 
     @tasks = tasks.page(params[:page]).per(10)
+    @labels = current_user.labels.pluck(:name, :id)
   end
 
   # GET /tasks/1 or /tasks/1.json

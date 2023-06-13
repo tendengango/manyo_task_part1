@@ -52,6 +52,9 @@ fr:
   nav:
     tasks_index: Liste des tâches
     new_task: Enregistrer une tâche
+    labels_index: Liste des étiquettes
+    new_label: Nouvelle étiquette
+    account_details: Détails du compte
     
   common:
     new: Nouvel tâche
