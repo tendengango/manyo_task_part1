@@ -10,19 +10,17 @@ class SessionsController < ApplicationController
     if user&.authenticate(params[:session][:password])
       #session[:user_id]= user.id
       log_in(user)
-      redirect_to tasks_path
-      #redirect_to user_path(user.id)
+      redirect_to tasks_path, notice: 'Connected'
+     
     else
       flash.now[:alert] = 'Incorrect email address or password.'
-      #flash.now[:danger] = 'I failed to login'
+     
       render :new
     end
   end
 
   def destroy
     session.delete(:user_id)
-    #flash[:notice] = 'logged out'
     redirect_to new_session_path, notice: 'You have logged out.'
-    #redirect_to new_session_path
   end
 end

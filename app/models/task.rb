@@ -16,6 +16,5 @@ class Task < ApplicationRecord
 
   scope :search_status, -> (status) { where(status: status) }
   scope :search_title, -> (titre) { where("titre LIKE ?", "%#{titre}%") }
-  scope :search_label_id, -> (label_id) { joins(:labels).where(labels: { id: label_id }).distinct }
-  
+  scope :search_label_id, -> (label_id) { joins(:labels).where(labels: { id: label_id }).distinct } 
 end

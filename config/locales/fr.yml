@@ -55,6 +55,7 @@ fr:
     labels_index: Liste des étiquettes
     new_label: Nouvelle étiquette
     account_details: Détails du compte
+    logout: Se deconnecter
     
   common:
     new: Nouvel tâche

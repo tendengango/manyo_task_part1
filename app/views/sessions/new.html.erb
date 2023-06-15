@@ -3,12 +3,12 @@
 <p id="alert"><%= alert %></p>
 
 <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :email, 'email address' %>
     <%= f.email_field :email %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :password, '(password)' %>
     <%= f.password_field :password %>
   </div>

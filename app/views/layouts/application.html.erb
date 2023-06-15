@@ -4,7 +4,7 @@
     <title>CdpWebManyoTask</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -12,6 +12,8 @@
   <p id="notice"><%= notice %></p>
   <body>
     <%= render "layouts/nav" %>
+    <div class="container mt-5">
     <%= yield %>
+    <div>
   </body>
 </html>
