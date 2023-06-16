@@ -1,11 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <%= link_to 'Manyo Task', root_path, class:"navbar-brand" %>
+  <%= link_to 'Task App', root_path, class:"navbar-brand" %>
   <div class="collapse navbar-collapse justify-content-end" id="navbar">
     <div class="navbar-nav">
-    <% if logged_in? %>
-    <p><strong>Connecté en tant que.<%= "" if current_user.admin? %> <%= current_user.name %></strong></p>
-    <% end %>
+    
     <div class="navbar-nav">
+        
         <% if logged_in? %>
         <% if current_user.admin? %>
           <%= link_to t('nav.users_index'), admin_users_path, id: "users-index", class: "nav-item nav-link" %>
@@ -16,7 +15,7 @@
           <%= link_to t('nav.labels_index'), labels_path, id: "labels-index", class: "nav-item nav-link" %>
           <%= link_to t('nav.new_label'), new_label_path, id: "new-label", class: "nav-item nav-link" %>
           <%= link_to t('nav.account_details'), user_path(current_user.id), id: "my-account", class: "nav-item nav-link" %>
-          <%= link_to "logout", session_path(current_user.id), method: :delete, id: "sign-out", class: "nav-item nav-link" %>
+          <%= button_to "logout", session_path(current_user.id), method: :delete, id: "sign-out", class: "nav-item nav-link" %>
        
     <% else %>
        <%= link_to t('nav.account_registration'), new_user_path, id: "sign-up", class: "nav-item nav-link" %>

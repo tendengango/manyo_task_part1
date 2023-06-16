@@ -5,15 +5,15 @@
 <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
   <div class="form-group">
     <%= f.label :email, 'email address' %>
-    <%= f.email_field :email %>
+    <%= f.email_field :email, class: "form-control" %>
   </div>
 
   <div class="form-group">
     <%= f.label :password, '(password)' %>
-    <%= f.password_field :password %>
+    <%= f.password_field :password, class: "form-control"%>
   </div>
 
   <div class="actions">
-    <%= f.submit "login", id: "create-session" %>
+    <%= f.submit "login", id: "create-session", class: "btn btn-dark" %>
   </div>
 <% end %>

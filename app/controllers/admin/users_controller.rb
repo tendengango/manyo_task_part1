@@ -48,6 +48,6 @@ private
   end
 
   def user_params
-    params.admin_require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
   end     
 end
