@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6 }
   attribute :admin, :boolean, default: false
   has_many :tasks, dependent: :destroy
+  has_many :labels, dependent: :destroy
 
   def admin?
     admin

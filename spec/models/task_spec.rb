@@ -26,7 +26,13 @@ RSpec.describe Task, type: :model do
 
     context 'If the task Title and description have values' do
       it 'You can register a task' do
-        task = Task.create(titre: 'Titre2', content: 'Create a proposal.', deadline_on: '2023/5/25', priority: 'low', status: 'done', user_id: user.id)
+        task = Task.create(
+          titre: 'Titre2', 
+          content: 'Create a proposal.', 
+          deadline_on: '2023/5/25', 
+          priority: 'low', 
+          status: 'done', 
+          user_id: user.id)
         expect(task).to be_valid
       end
     end

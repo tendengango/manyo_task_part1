@@ -12,16 +12,13 @@ class TasksController < ApplicationController
     end
     
     if params[:search].present?
-      if params[:search][:status].present? && params[:search][:title].present?
-        tasks = tasks.search_status(params[:search][:status]).search_title(params[:search][:title])
-      elsif params[:search][:status].present?
-        tasks = tasks.search_status(params[:search][:status])
-      elsif params[:search][:title].present?
-        tasks = tasks.search_title(params[:search][:title])
-      end
+      tasks = tasks.search_status(params[:search][:status]) if params[:search][:status].present?
+      tasks = tasks.search_title(params[:search][:title]) if params[:search][:title].present?
+      tasks = tasks.search_label_id(params[:search][:label_id]) if params[:search][:label_id].present?
     end
 
     @tasks = tasks.page(params[:page]).per(10)
+    @labels = current_user.labels.pluck(:name, :id)
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -32,6 +29,7 @@ class TasksController < ApplicationController
   # GET /tasks/new
   def new
     @task = Task.new
+    @labels = current_user.labels
   end
 
   # GET /tasks/1/edit
@@ -43,6 +41,12 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.user = current_user
+    label_ids = params[:task][:label_ids]
+    if label_ids.present?
+      label_ids.each do |label_id|
+        @task.task_labels.new(label_id: label_id)
+      end
+    end
 
     respond_to do |format|
       if @task.save
@@ -57,6 +61,13 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
+    @task.labels.destroy_all
+    label_ids = params[:task][:label_ids]
+    if label_ids.present?
+      label_ids.each do |label_id|
+        @task.task_labels.new(label_id: label_id)
+      end
+    end
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to @task, notice: t('.updated') }
